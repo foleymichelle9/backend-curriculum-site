@@ -170,6 +170,9 @@
 
 ## User Stories
 
+TODO:
+Items can only be added to cart if they are active
+
 ### Navigation
 
 ```
@@ -222,7 +225,7 @@ story_text: As a visitor
     I see all items I've added to my cart
     Each item in my cart shows the following information:
       - the name of the item
-      - a very small thumbnail image of the item
+      - the item image
       - the merchant I'm buying this item from
       - the price of the item
       - my desired quantity of the item
@@ -251,7 +254,7 @@ story_text: As a visitor
     All items have been completely removed from my cart
     The navigation bar shows 0 items in my cart
 
-[remoe-cart-item]
+[remove-cart-item]
 title: Removing Item from Cart
 labels: cart
 depends_on: create-cart
@@ -271,7 +274,7 @@ story_text: As a visitor
     And I visit my cart
     Next to each item in my cart
     I see a button or link to increment the count of items I want to purchase
-    I cannot increment the count beyond the merchant's inventory size
+    I cannot increment the count beyond the item's inventory size
 
 [decrease-cart-item-quantity]
 title: Decreasing Item Quantity from Cart
@@ -292,7 +295,7 @@ story_text: As a visitor
     When I have items in my cart
     And I visit my cart
     I see a button or link to Checkout
-    When I click that button, I am taken to an order creation page
+    When I click that button, I am taken to the new order page
 
 [new-order]
 title: New Order Page
@@ -300,14 +303,14 @@ labels: cart, order
 depends_on: checkout-link
 story_text: As a visitor
     When I check out from my cart
-    On the order creation page I see the details of my cart:
+    On the new order page I see the details of my cart:
       - the name of the item
       - the merchant I'm buying this item from
       - the price of the item
       - my desired quantity of the item
       - a subtotal (price multiplied by quantity)
       - a grand total of what everything in my cart will cost
-    I also see a form to enter my information for the order:
+    I also see a form to where I must enter my shipping information for the order:
       - name
       - address
       - city
@@ -320,7 +323,7 @@ title: Order Creation
 labels: order
 depends_on: new-order
 story_text: As a visitor
-    When I fill out all information on the order creation page
+    When I fill out all information on the new order page
     And click on 'Create Order'
     An order is created and saved in the database
     And I am redirected to that order's show page with the following information:
@@ -340,7 +343,7 @@ labels: order
 depends_on: create-order
 story_text: As a visitor
     From the order creation page
-    When I click 'Create Order' without completing the order form
+    When I click 'Create Order' without completing the shipping address form
     I see a flash message indicating that I need to complete the form for successful order creation
 ```
 
@@ -352,8 +355,7 @@ title: Reviews on Item Show Page
 labels: reviews
 story_text: As a visitor,
     When I visit an item's show page,
-    I see the item information (same information from tiny shop)
-    I also see a list of reviews for that item
+    I see a list of reviews for that item
     Each review will have:
     - title
     - content of the review
@@ -367,7 +369,6 @@ story_text: As a visitor,
     When I visit an item's show page
     I see a link to add a new review for this item.
     When I click on this link, I am taken to a new review path
-    And that path is nested under the item (ex: '/items/5/reviews/new').
     On this new page, I see a form where I must enter:
     - a review title
     - a numeric rating that can only be a number from 1 to 5
@@ -391,7 +392,7 @@ story_text: As a visitor
     I see an area on the page for statistics about reviews:
     - the top three reviews for this item (title and rating only)
     - the bottom three reviews for this item  (title and rating only)
-    - the overall average rating of all reviews for this item
+    - the average rating of all reviews for this item
 
 [edit-review]
 title: Edit a Review
@@ -401,8 +402,7 @@ story_text: As a visitor,
     When I visit an item's show page
     I see a link to edit the review next to each review.
     When I click on this link, I am taken to an edit review path
-    And that path is nested under the item (ex: '/items/5/reviews/edit').
-    On this new page, I see a form that is prepopulated with the form's existing:
+    On this new page, I see a form that includes:
     - title
     - numeric rating
     - text of the review itself
@@ -574,7 +574,6 @@ story_text: As a visitor
 
 * As an admin user
   - ship an order
-  - can assign a user to a merchant or remove a user from a merchant
   - and all merchant responsibilities
   - and all user responsibilities
   - some sort of statistics !
@@ -593,6 +592,159 @@ story_text: As a visitor
 * Admin and Merchant dashboards
   - statistics
   - links to accomplish their role's tasks
+
+
+### Merchant User Stories
+```
+[merchant-users-index]
+title: Merchant Sees Their Users
+labels: merchant
+story_text: As a Merchant User
+    When I visit my dashboard
+    I see a link to see 'Merchant Users'
+    When I click this link
+    I am taken to my merchants users page
+    And I see all users assigned to my Merchant
+    For each user I see:
+      - Name
+      - Email
+      - A link to remove that user from this merchant
+
+[merchant-removes-user]
+title: Merchant Removes User
+labels: merchant
+depends_on: merchant-users-index
+story_text: As a Merchant User
+    When I visit my merchant's users page
+    I see a link or button to remove a user from the merchant
+    When I click that link or button
+    I am returned to my merchant's users page
+    And I no longer see that user
+    NEWLINE
+    Now, when the user that I removed attempts to log in, they will be logged in as a regular.
+
+[merchant-adds-user]
+title: Merchant Adds User
+labels: merchant
+depends_on: merchant-users-index
+story_text: As a Merchant User
+  When I visit my merchant's users page
+  I see a form to add a new user to the merchant
+  Then I fill in the form with an existing user's email address
+  And click 'Add User to Merchant'
+  Then I am redirected back to my merchant's users page
+  And I see that user listed along with the other merchant users for my merchant.
+  NEWLINE
+  I can only add a user who exists, is not an admin user, and is not assigned to a merchant.
+  Now, when the user that I added logs in, they will be logged in as a merchant user.
+
+[merchant-items-placeholder-image-notification]
+title: Merchant Sees Items that Need Images
+labels: merchant, item
+story_text: As a Merchant User
+    When I visit my dashboard
+    I see an area listing all items that are using a placeholder image
+    Each item name is a link to that item's edit page
+    When I click on that link
+    And update the item with an image
+    I am returned to my Items index
+    When I next visit my dashboard, that item is no longer listed as needing an image
+
+[merchant-unfulfilled-revenue]
+title: Merchant Sees Unfulfilled Revenue
+labels: merchant, item
+story_text: As a Merchant User
+    When I visit my dashboard
+    I see statistics showing:
+      - How many orders are unfulfilled
+      - How much revenue those unfulfilled orders would generate for my merchant
+
+[merchant-sees-unfulfillable-orders]
+title: Merchant Sees Unfulfillable Orders
+labels: merchant, item, order
+story_text: As a Merchant User
+    When I visit my dashboard
+    In my list of orders
+    I see a warning message (Inventory Conflict) next to any order that has an order_item quantity that exceeds my available inventory for that item
+
+[merchant-sees-unfulfillable-order-combos]
+title: Merchant Sees Unfulfillable Order Combinations
+labels: merchant, item, order
+story_text: As a Merchant User
+    When I visit my dashboard
+    In my list of orders
+    If an item has been ordered more than once, and the sum of those order_item quantities exceed the available item inventory
+    I see a warning next to all affected orders indicating 'Multiple Order Conflict'
+
+[merchant-adds-bulk-discount]
+title: Merchant Can Add a Bulk Discount
+labels: merchant, bulk_discount
+depends_on: merchant-bulk-discount-index
+story_text: As a Merchant User
+    When I visit my merchant's discount index
+    I see a link or button to Add a Bulk Discount
+    When I click that link or button
+    I am taken to a new bulk-discount form where I enter the following information:
+      - name
+      - amount of the bulk-discount in dollars/cents (ex: .5 means the bulk-discount is for $0.05 off an item's price)
+      - quantity needed to activate the bulk discount
+    When I click "Create Discount"
+    I am redirected back to my merchant's discount index
+
+[merchant-bulk-discount-index]
+title: Merchant sees all bulk discounts
+labels: merchant, bulk_discount
+story_text: As a Merchant User
+    When I visit my dashboard
+    I see a link or button labeled 'Discounts'
+    When I click that link or button
+    I am taken to a page where I can see all my merchant's existing discounts
+    For each discount, I see:
+      - Name
+      - Amount
+      - Quantity Needed to activate the discount
+      - Link or button to edit the discount
+      - Link or button do delete the discount
+
+[merchant-edits-bulk-discount]
+title: Merchant Edits Discount
+labels: merchant, bulk_discount
+story_text: As a Merchant User
+    When I visit my merchant's discounts page
+    And click 'Edit' next to a discount
+    I am taken to a form to edit the discount (the form prepopulates with the current discount information)
+    On that form, I can edit the:
+      - Name
+      - Amount
+      - Quantity Needed
+    When I click 'Update Discount'
+    I am returned to my merchant's discounts page
+    And I see the updated information
+    NEWLINE
+    Updating a discount does not change any existing order_item prices
+
+[merchant-deletes-bulk-discount]
+title: Merchant Deletes Discount
+labels: merchant, bulk_discount
+story_text: As a Merchant User
+    When I visit my merchant's discounts page
+    And click 'Delete' next to a discount
+    The discount is deleted and I am returned to the merchant's discounts page
+    NEWLINE
+    Deleting a discount does not change any existing order_item prices
+
+[user-orders-with-bulk-discount]
+title: User Activates a Bulk Discount
+labels: order, bulk_discount
+story_text: As a Regular User
+    When a merchant has a discount
+    And I add items to my cart from that merchant, and the quantity meets the requirements for the bulk discount
+    I see an updated cost per item (the discounted cost)
+    When I click Check Out, the order_item subtotal and order grand total reflect the discounted price.
+    NEWLINE
+    If I have items in my cart from more than one merchant, the discount will only apply to items from the merchant that has the discount.
+    If I add multiple items from the merchant with the bulk discount, only the items which meet the discount quantity will have a reduced price - the items which do not meet that quantity will be the stated price.
+```
 
 
 ------------------
