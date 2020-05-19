@@ -68,7 +68,7 @@ Run the test - why is it so slow?
 
 In this particular example, we are relying on creating an object that takes a loooong time to create.  In this example, we have forced the issue by putting a `sleep` in the Paint class; but in the real world, this kind of slow down could be caused by a lengthy API call, or perhaps another team is working on the Paint class, and we don't have the class yet (and it is not our task to create the class).  In order to focus our test more distincly on the Bob class, we can use a Mock.
 
-**Mocks are objects that stand in for other objects.** The other object might be one that's not implemented yet, doesn't yet have the functionality we need, or maybe we just want to work with a simpler situation. You can think of a mock as fake or a dummy object.
+**Mocks are objects that stand in for other objects.** The other object might be expensive to create with regards to performance (think objects that rely on the internet), or it might require a complex setup and instantiation (think lots of attributes and dependencies), or maybe we expect to have this object in the future, but it hasn't been completed by our teammate yet (think of asynchronous development). You can think of a mock as fake or a dummy object.
 
 In the test above, we are going to use a Mock object to stand in for a Paint object.
 
