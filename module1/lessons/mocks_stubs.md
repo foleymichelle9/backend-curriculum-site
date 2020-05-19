@@ -170,6 +170,8 @@ With that last test, update it to use mocks and stubs so that you can make it pa
 
 **Mild:**
 * Leveraging mocks and/or stubs, write tests for all methods in the ImageGenerator class - you should have at least 4 new tests
+
+
 **Spicy:**
 * Leveraging mocks and/or stubs, write tests for all methods in the User class - you should have at least 3 new tests
 
@@ -179,6 +181,7 @@ With that last test, update it to use mocks and stubs so that you can make it pa
 What are mocks and stubs? When would you use them?
 
 ## Further Reading
-
+- [Mocha Docs](https://mocha.jamesmead.org/Mocha.html)
+- [Mocha Repo](https://github.com/freerange/mocha/)
 - Martin Fowler - Test Double: link [here](http://www.martinfowler.com/bliki/TestDouble.html)
 - Gerard Meszaros - Test Double: link [here](http://xunitpatterns.com/Test%20Double.html)
