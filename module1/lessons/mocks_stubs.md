@@ -159,15 +159,20 @@ With that last test, update it to use mocks and stubs so that you can make it pa
 
 **Setup:**
 
-1. Clone down the [Number Generator](https://github.com/turingschool-examples/number_generator).
-2. cd number_generator
+1. Clone down the [User Image Generator](https://github.com/turingschool-examples/user_image_generator).
+2. cd user_image_generator
 3. gem install mocha
-4. require 'mocha/minitest' (at the top of your test file)
+4. remember to require 'mocha/minitest' (at the top of your test file)
 
 **Directions:**
 
-* Review the NumberGenerator class to familiarize yourself with the functionality
-* Leveraging mocks and/or stubs, write tests for all methods in the NumberGenerator class - you should have at least 4 tests
+* Review the ImageGenerator and User classes to familiarize yourself with the functionality
+
+**Mild:**
+* Leveraging mocks and/or stubs, write tests for all methods in the ImageGenerator class - you should have at least 4 new tests
+**Spicy:**
+* Leveraging mocks and/or stubs, write tests for all methods in the User class - you should have at least 3 new tests
+
 
 ### Interview Question
 
