@@ -21,7 +21,7 @@ You should review each section of the rubric and strive to have a 3 in each sect
 
 Presentation points:
 
-[ ] Demonstration of functional completeness (Running the spec harness & Rails Driver)
+[ ] Demonstration of functional completeness (Running the spec harness)
   
 [ ] Technical quality and organization of the code
   
